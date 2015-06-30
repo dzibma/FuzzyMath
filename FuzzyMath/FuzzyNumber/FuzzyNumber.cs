@@ -70,7 +70,7 @@ namespace FuzzyMath
             }
 
             var i = membership * (alphaCuts.Length - 1);
-            if (i % 1 == 0)
+            if (i - Math.Floor(i) < double.Epsilon)
             {
                 return alphaCuts[(int)i];
             }
