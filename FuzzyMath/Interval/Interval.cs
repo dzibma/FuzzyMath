@@ -14,12 +14,14 @@ namespace FuzzyMath
         /// <summary>
         /// Creates a closed interval [a, b]
         /// </summary>
-        /// <param name="a">Left bound</param>
-        /// <param name="b">Right bound</param>
+        /// <param name="a">Lower bound</param>
+        /// <param name="b">Upper bound</param>
         public Interval(double a, double b)
         {
             if (a > b)
-                throw new ArgumentException();
+            {
+                throw new ArgumentException("Lower bound must be less than or equal to the upper");
+            }
 
             this.a = a;
             this.b = b;
@@ -87,10 +89,14 @@ namespace FuzzyMath
         public bool Intersects(Interval other)
         {
             if (a >= other.A && a <= other.B)
+            {
                 return true;
+            }
 
             if (a <= other.A && b >= other.A)
+            {
                 return true;
+            }
 
             return false;
         }
