@@ -133,23 +133,23 @@ namespace FuzzyMath
         /// <summary>
         /// Maps an unary operation on a fuzzy number
         /// </summary>
-        public static FuzzyNumber Map(FuzzyNumber number, Func<Interval, Interval> operation)
+        public static FuzzyNumber Map(FuzzyNumber X, Func<Interval, Interval> operation)
         {
-            return new FuzzyNumber(number.AlphaCuts.Select(operation));
+            return new FuzzyNumber(X.AlphaCuts.Select(operation));
         }
 
         /// <summary>
         /// Maps a binary operation on two fuzzy numbers
         /// (Performs the operation over each pair of corresponding alpha-cuts)
         /// </summary>
-        public static FuzzyNumber Map(FuzzyNumber left, FuzzyNumber right, Func<Interval, Interval, Interval> operation)
+        public static FuzzyNumber Map(FuzzyNumber X, FuzzyNumber Y, Func<Interval, Interval, Interval> operation)
         {
-            if (left.AlphaCuts.Count != right.AlphaCuts.Count)
+            if (X.AlphaCuts.Count != Y.AlphaCuts.Count)
             {
                 throw new NotImplementedException();
             }
 
-            return new FuzzyNumber(left.AlphaCuts.Zip(right.AlphaCuts, operation));
+            return new FuzzyNumber(Y.AlphaCuts.Zip(Y.AlphaCuts, operation));
         }
 
     }
