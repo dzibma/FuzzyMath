@@ -130,6 +130,31 @@ namespace FuzzyMath
             return String.Format("[{0}]", String.Join(", ", alphaCuts));
         }
 
+        public double GreaterThan(FuzzyNumber other)
+        {
+            return GreaterThan(this, other);
+        }
+
+        /// <summary>
+        /// How much is fuzzy number 'X' greater than 'Y'?
+        /// </summary>
+        /// <returns>Presumption level from the interval [0, 1]</returns>
+        public static double GreaterThan(FuzzyNumber X, FuzzyNumber Y)
+        {
+            if (X.AlphaCuts.Count != Y.AlphaCuts.Count)
+            {
+                throw new NotImplementedException();
+            }
+
+            var sum = 0d;
+            for (var i = 0; i < X.AlphaCuts.Count; i++)
+            {
+                sum += X.AlphaCuts[i].GreaterThan(Y.AlphaCuts[i]);
+            }
+
+            return sum / X.AlphaCuts.Count;
+        }
+
         /// <summary>
         /// Maps an unary operation on a fuzzy number
         /// </summary>
@@ -149,7 +174,7 @@ namespace FuzzyMath
                 throw new NotImplementedException();
             }
 
-            return new FuzzyNumber(Y.AlphaCuts.Zip(Y.AlphaCuts, operation));
+            return new FuzzyNumber(X.AlphaCuts.Zip(Y.AlphaCuts, operation));
         }
 
     }

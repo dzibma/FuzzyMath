@@ -110,6 +110,41 @@ namespace FuzzyMath
             return String.Format("[{0}, {1}]", a.ToString(CultureInfo.InvariantCulture), b.ToString(CultureInfo.InvariantCulture));
         }
 
+        public double GreaterThan(Interval other)
+        {
+            return GreaterThan(this, other);
+        }
+
+        /// <summary>
+        /// How much is interval 'x' greater than 'y'?
+        /// </summary>
+        /// <returns>Presumption level from the interval [0, 1]</returns>
+        public static double GreaterThan(Interval x, Interval y)
+        {
+            if (x.B < y.A)
+            {
+                return 0;
+            }
+
+            if (x.A > y.B)
+            {
+                return 1;
+            }
+
+            var width = x.Width + y.Width;
+            if (width == 0)
+            {
+                if (x.A == y.A)
+                {
+                    return .5;
+                }
+
+                return x.A > y.A ? 1 : 0;
+            }
+
+            return (x.B - y.A) / width;
+        }
+
     }
 }
 
