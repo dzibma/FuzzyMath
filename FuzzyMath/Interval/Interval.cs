@@ -23,6 +23,11 @@ namespace FuzzyMath
                 throw new ArgumentException("Lower bound must be less than or equal to the upper");
             }
 
+            if (double.IsInfinity(a) || double.IsInfinity(b))
+            {
+                throw new ArgumentException("Interval must be finite.");
+            }
+
             this.a = a;
             this.b = b;
         }
@@ -30,9 +35,14 @@ namespace FuzzyMath
         /// <summary>
         /// Creates a degenerate interval
         /// </summary>
-        public Interval(double value)
+        public Interval(double a)
         {
-            a = b = value;
+            if (double.IsInfinity(a))
+            {
+                throw new ArgumentException("Interval must be finite.");
+            }
+
+            this.a = b = a;
         }
 
         /// <summary>
