@@ -14,43 +14,43 @@ namespace FuzzyMath
             return FuzzyNumber.Map(X, x => Cos(x));
         }
 
-        public static Interval Cos(Interval interval)
+        public static Interval Cos(Interval x)
         {
-            double a, b, x;
-            x = Math.Floor(interval.A / Math.PI) * Math.PI;
+            double a, b, extreme;
+            extreme = Math.Floor(x.A / Math.PI) * Math.PI;
 
-            if (interval.Contains(x))
+            if (x.Contains(extreme))
             {
-                a = Math.Cos(x);
+                a = Math.Cos(extreme);
             }
             else
             {
-                x += Math.PI;
+                extreme += Math.PI;
 
-                if (interval.Contains(x))
+                if (x.Contains(extreme))
                 {
-                    a = Math.Cos(x);
+                    a = Math.Cos(extreme);
                 }
                 else
                 {
-                    a = Math.Cos(interval.A);
-                    b = Math.Cos(interval.B);
+                    a = Math.Cos(x.A);
+                    b = Math.Cos(x.B);
 
                     return b > a ? new Interval(a, b) : new Interval(b, a);
                 }
             }
 
-            x += Math.PI;
+            extreme += Math.PI;
 
-            if (interval.Contains(x))
+            if (x.Contains(extreme))
             {
-                b = Math.Sin(x);
+                b = Math.Sin(extreme);
             }
             else
             {
                 b = a > 0
-                    ? Math.Min(Math.Cos(interval.A), Math.Cos(interval.B))
-                    : Math.Max(Math.Cos(interval.A), Math.Cos(interval.B));
+                    ? Math.Min(Math.Cos(x.A), Math.Cos(x.B))
+                    : Math.Max(Math.Cos(x.A), Math.Cos(x.B));
             }
 
             return b > a ? new Interval(a, b) : new Interval(b, a);
