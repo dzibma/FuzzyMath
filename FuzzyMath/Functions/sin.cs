@@ -6,7 +6,7 @@ namespace FuzzyMath
     {
 
         /// <summary>
-        /// Calculates the sine of a fuzzy number
+        /// Calculates sine of the fuzzy number
         /// </summary>
         /// <param name="X">Fuzzy angle in radians</param>
         public static FuzzyNumber Sin(FuzzyNumber X)

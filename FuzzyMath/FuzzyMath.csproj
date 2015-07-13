@@ -39,8 +39,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Functions\atan2.cs" />
     <Compile Include="Functions\cos.cs" />
+    <Compile Include="Functions\exp.cs" />
+    <Compile Include="Functions\pow.cs" />
     <Compile Include="Functions\sin.cs" />
+    <Compile Include="Functions\tan.cs" />
     <Compile Include="FuzzyNumberFactory.cs" />
     <Compile Include="FuzzyNumber\FuzzyNumber.cs" />
     <Compile Include="Interval\Interval.cs" />

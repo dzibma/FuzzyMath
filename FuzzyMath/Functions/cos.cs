@@ -6,7 +6,7 @@ namespace FuzzyMath
     {
 
         /// <summary>
-        /// Calculates the cosine of a fuzzy number
+        /// Calculates cosine of the fuzzy number
         /// </summary>
         /// <param name="X">Fuzzy angle in radians</param>
         public static FuzzyNumber Cos(FuzzyNumber X)
