@@ -144,12 +144,7 @@ namespace FuzzyMath
             var width = x.Width + y.Width;
             if (width == 0)
             {
-                if (x.A == y.A)
-                {
-                    return .5;
-                }
-
-                return x.A > y.A ? 1 : 0;
+                return .5;
             }
 
             return (x.B - y.A) / width;

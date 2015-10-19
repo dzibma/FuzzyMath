@@ -27,6 +27,21 @@ namespace FuzzyMath.Tests
         }
 
         [TestMethod]
+        public void GreaterThan()
+        {
+            var x = new Interval(1, 3);
+            var y = new Interval(2, 4);
+            var z = new Interval(3, 4);
+            var w = new Interval(2);
+
+            Assert.AreEqual(.25, Interval.GreaterThan(x, y));
+            Assert.AreEqual(1, Interval.GreaterThan(x, y) + Interval.GreaterThan(y, x));
+            Assert.AreEqual(0, Interval.GreaterThan(x, z));
+            Assert.AreEqual(1, Interval.GreaterThan(z, x));
+            Assert.AreEqual(.5, Interval.GreaterThan(x, w));
+        }
+
+        [TestMethod]
         public void Intersects()
         {
             var x = new Interval(-2, 0);
