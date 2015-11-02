@@ -33,7 +33,7 @@
         /// <param name="c">Kernel upper bound</param>
         /// <param name="d">Support upper bound</param>
         /// <returns></returns>
-        public FuzzyNumber Create(double a, double b, double c, double d)
+        public FuzzyNumber CreateTrapezoidal(double a, double b, double c, double d)
         {
             var intervals = new Interval[pieces];
 
@@ -55,17 +55,17 @@
         /// <param name="b">Kernel</param>
         /// <param name="c">Support upper bound</param>
         /// <returns></returns>
-        public FuzzyNumber Create(double a, double b, double c)
+        public FuzzyNumber CreateTrapezoidal(double a, double b, double c)
         {
-            return Create(a, b, b, c);
+            return CreateTrapezoidal(a, b, b, c);
         }
 
         /// <summary>
         /// Creates a fuzzy number representing a crisp value
         /// </summary>
-        public FuzzyNumber Create(double a)
+        public FuzzyNumber CreateTrapezoidal(double a)
         {
-            return Create(a, a, a);
+            return CreateTrapezoidal(a, a, a, a);
         }
 
     }
