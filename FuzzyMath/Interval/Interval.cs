@@ -142,7 +142,7 @@ namespace FuzzyMath
             }
 
             var width = x.Width + y.Width;
-            if (width == 0)
+            if (width < double.Epsilon)
             {
                 return .5;
             }
