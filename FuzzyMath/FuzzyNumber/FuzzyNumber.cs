@@ -69,22 +69,23 @@ namespace FuzzyMath
                 throw new ArgumentException("Membership degree must be from the interval [0, 1]");
             }
 
-            var i = membership * (alphaCuts.Length - 1);
-            if (i - Math.Floor(i) < double.Epsilon)
+            var pos = membership * (alphaCuts.Length - 1);
+            var i = (int)Math.Round(pos);
+            if (Math.Abs(pos - i) < double.Epsilon)
             {
-                return alphaCuts[(int)i];
+                return alphaCuts[i];
             }
 
-            var upper = (int)Math.Ceiling(i);
-            var lower = (int)Math.Floor(i);
+            var upper = (int)Math.Ceiling(pos);
+            var lower = (int)Math.Floor(pos);
 
             var a = alphaCuts[lower].A == alphaCuts[upper].A
                 ? alphaCuts[lower].A
-                : alphaCuts[upper].A - (upper - i) * (alphaCuts[upper].A - alphaCuts[lower].A);
+                : alphaCuts[upper].A - (upper - pos) * (alphaCuts[upper].A - alphaCuts[lower].A);
 
             var b = alphaCuts[lower].B == alphaCuts[upper].B
                 ? alphaCuts[lower].A
-                : alphaCuts[upper].B + (upper - i) * (alphaCuts[lower].B - alphaCuts[upper].B);
+                : alphaCuts[upper].B + (upper - pos) * (alphaCuts[lower].B - alphaCuts[upper].B);
 
             return new Interval(a, b);
         }
