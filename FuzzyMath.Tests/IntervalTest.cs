@@ -34,11 +34,12 @@ namespace FuzzyMath.Tests
             var z = new Interval(3, 4);
             var w = new Interval(2);
 
-            Assert.AreEqual(.25, Interval.GreaterThan(x, y));
-            Assert.AreEqual(1, Interval.GreaterThan(x, y) + Interval.GreaterThan(y, x));
-            Assert.AreEqual(0, Interval.GreaterThan(x, z));
-            Assert.AreEqual(1, Interval.GreaterThan(z, x));
-            Assert.AreEqual(.5, Interval.GreaterThan(x, w));
+            Assert.AreEqual(.25, x > y);
+            Assert.AreEqual(1, x > y + x < y);
+            Assert.AreEqual(0, x > z);
+            Assert.AreEqual(1, z > x);
+            Assert.AreEqual(.5, x < w);
+            Assert.AreEqual(1, (2 > x) + (x > 2));
         }
 
         [TestMethod]

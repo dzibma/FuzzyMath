@@ -48,8 +48,8 @@
     <Compile Include="FuzzyNumberFactory.cs" />
     <Compile Include="FuzzyNumber\FuzzyNumber.cs" />
     <Compile Include="Interval\Interval.cs" />
-    <Compile Include="Interval\operations.cs" />
-    <Compile Include="FuzzyNumber\operations.cs" />
+    <Compile Include="Interval\operators.cs" />
+    <Compile Include="FuzzyNumber\operators.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
