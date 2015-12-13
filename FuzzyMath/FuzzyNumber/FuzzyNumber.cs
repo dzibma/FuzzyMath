@@ -70,12 +70,6 @@ namespace FuzzyMath
             }
 
             var pos = membership * (alphaCuts.Length - 1);
-            var i = (int)Math.Round(pos);
-            if (Math.Abs(pos - i) < double.Epsilon)
-            {
-                return alphaCuts[i];
-            }
-
             var upper = (int)Math.Ceiling(pos);
             var lower = (int)Math.Floor(pos);
 
@@ -84,7 +78,7 @@ namespace FuzzyMath
                 : alphaCuts[upper].A - (upper - pos) * (alphaCuts[upper].A - alphaCuts[lower].A);
 
             var b = alphaCuts[lower].B == alphaCuts[upper].B
-                ? alphaCuts[lower].A
+                ? alphaCuts[lower].B
                 : alphaCuts[upper].B + (upper - pos) * (alphaCuts[lower].B - alphaCuts[upper].B);
 
             return new Interval(a, b);
