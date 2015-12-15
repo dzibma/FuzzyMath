@@ -9,6 +9,9 @@ namespace FuzzyMath
     public partial struct Interval
     {
 
+        /// <summary>
+        /// Tolerance in equality comparison (of doubles) 
+        /// </summary>
         internal static double Epsilon = 1E-12;
 
         private double a, b;
@@ -23,7 +26,7 @@ namespace FuzzyMath
 
             if (a > b)
             {
-                if (Math.Abs(a - b) > Epsilon)
+                if (a - b > Epsilon)
                 {
                     throw new ArgumentException("Lower bound must be less than or equal to the upper");
                 }
