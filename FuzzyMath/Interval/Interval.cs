@@ -9,6 +9,8 @@ namespace FuzzyMath
     public partial struct Interval
     {
 
+        internal static double Epsilon = 1E-12;
+
         private double a, b;
 
         /// <summary>
@@ -18,9 +20,15 @@ namespace FuzzyMath
         /// <param name="b">Upper bound</param>
         public Interval(double a, double b)
         {
+
             if (a > b)
             {
-                throw new ArgumentException("Lower bound must be less than or equal to the upper");
+                if (Math.Abs(a - b) > Epsilon)
+                {
+                    throw new ArgumentException("Lower bound must be less than or equal to the upper");
+                }
+
+                b = a;
             }
 
             if (double.IsInfinity(a) || double.IsInfinity(b))
@@ -82,7 +90,7 @@ namespace FuzzyMath
         /// </summary>
         public bool Contains(double value)
         {
-            return a <= value && value <= b;
+            return (a < value || a - value < Epsilon) && (value < b || value - b < Epsilon);
         }
 
         /// <summary>
@@ -98,12 +106,12 @@ namespace FuzzyMath
         /// </summary>
         public bool Intersects(Interval other)
         {
-            if (a >= other.A && a <= other.B)
+            if ((a > other.A || other.A - a < Epsilon) && (a < other.B || a - other.B < Epsilon))
             {
                 return true;
             }
 
-            if (a <= other.A && b >= other.A)
+            if ((a < other.A || a - other.A < Epsilon) && (b > other.A || other.A - b < Epsilon))
             {
                 return true;
             }
@@ -142,7 +150,7 @@ namespace FuzzyMath
             }
 
             var width = x.Width + y.Width;
-            if (width < double.Epsilon)
+            if (width < Epsilon)
             {
                 return .5;
             }
