@@ -44,7 +44,7 @@ namespace FuzzyMath
 
             if (x.Contains(extreme))
             {
-                b = Math.Sin(extreme);
+                b = Math.Cos(extreme);
             }
             else
             {
