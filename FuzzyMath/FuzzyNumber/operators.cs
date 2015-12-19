@@ -73,13 +73,13 @@ namespace FuzzyMath
 
         public static double operator >(FuzzyNumber left, double right)
         {
-            var cuts = Enumerable.Repeat(new Interval(right), left.AlphaCuts.Count);
+            var cuts = Enumerable.Repeat(new Interval(right, right), left.AlphaCuts.Count);
             return left > new FuzzyNumber(cuts);
         }
 
         public static double operator >(double left, FuzzyNumber right)
         {
-            var cuts = Enumerable.Repeat(new Interval(left), right.AlphaCuts.Count);
+            var cuts = Enumerable.Repeat(new Interval(left, left), right.AlphaCuts.Count);
             return new FuzzyNumber(cuts) > right;
         }
 

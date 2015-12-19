@@ -13,7 +13,7 @@ namespace FuzzyMath.Tests
             var fn = new FuzzyNumberFactory(11);
 
             Assert.AreEqual(
-                    new Interval(2),
+                    new Interval(2, 2),
                     fn.CreateTrapezoidal(1, 2, 3).GetAlphaCut(1)
                 );
 

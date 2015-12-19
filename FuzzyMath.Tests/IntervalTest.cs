@@ -32,7 +32,7 @@ namespace FuzzyMath.Tests
             var x = new Interval(1, 3);
             var y = new Interval(2, 4);
             var z = new Interval(3, 4);
-            var w = new Interval(2);
+            var w = new Interval(2, 2);
 
             Assert.AreEqual(.25, x > y);
             Assert.AreEqual(1, x > y + x < y);
@@ -140,7 +140,7 @@ namespace FuzzyMath.Tests
         [ExpectedException(typeof(InvalidOperationException))]
         public void DivisionByZero()
         {
-            var blackHole = new Interval(3) / new Interval(-1, 1);
+            var blackHole = new Interval(3, 3) / new Interval(-1, 1);
         }
 
     }

@@ -9,21 +9,31 @@
         /// <summary>
         /// Number of alpha-cuts 
         /// </summary>
-        private int pieces = 11;
+        public int Pieces
+        {
+            get;
+            private set;
+        }
+
+        /// <summary>
+        /// Tolerance in equality comparison 
+        /// </summary>
+        public double Epsilon
+        {
+            get;
+            private set;
+        }
 
         /// <summary>
         /// Creates a factory of piecewise-linear fuzzy numbers
         /// </summary>
         /// <param name="pieces">Nubmer of alpha-cuts</param>
-        public FuzzyNumberFactory(int pieces)
+        /// <param name="epsilon">Tolerance in equality comparison</param>
+        public FuzzyNumberFactory(int pieces = 11, double epsilon = 1E-12)
         {
-            this.pieces = pieces > 1 ? pieces : 2;
+            Pieces = pieces > 1 ? pieces : 2;
+            Epsilon = epsilon;
         }
-
-        /// <summary>
-        /// Creates a factory of piecewise-linear fuzzy numbers using 11 alpha-cuts
-        /// </summary>
-        public FuzzyNumberFactory() { }
 
         /// <summary>
         /// Creates a trapezoidal fuzzy number
@@ -35,13 +45,14 @@
         /// <returns></returns>
         public FuzzyNumber CreateTrapezoidal(double a, double b, double c, double d)
         {
-            var intervals = new Interval[pieces];
+            var intervals = new Interval[Pieces];
 
             for (var i = 0; i < intervals.Length; i++)
             {
                 intervals[i] = new Interval(
-                        a + (b - a) * i / (pieces - 1),
-                        d - (d - c) * i / (pieces - 1)
+                        a + (b - a) * i / (Pieces - 1),
+                        d - (d - c) * i / (Pieces - 1),
+                        Epsilon
                     );
             }
 

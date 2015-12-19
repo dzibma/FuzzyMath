@@ -14,7 +14,7 @@ namespace FuzzyMath
         private Interval[] alphaCuts;
 
         /// <summary>
-        /// Creates a Fuzzy number from a list of confidence intervals
+        /// Creates a fuzzy number from list of intervals
         /// </summary>
         public FuzzyNumber(IEnumerable<Interval> alphaCuts)
         {
@@ -24,7 +24,7 @@ namespace FuzzyMath
             {
                 if (!this.alphaCuts[i - 1].Contains(this.alphaCuts[i]))
                 {
-                    throw new ArgumentException("Fuzzy number expects an ordered list of alpha-cuts where (n-1)th cut contains (n)th");
+                    throw new ArgumentException(String.Format("[{0}]", String.Join(", ", alphaCuts)));
                 }
             }
 
@@ -34,12 +34,22 @@ namespace FuzzyMath
             }
         }
 
+        private ReadOnlyCollection<Interval> readOnlyAlphaCuts;
+
         /// <summary>
         /// List of alpha-cuts
         /// </summary>
         public ReadOnlyCollection<Interval> AlphaCuts
         {
-            get { return Array.AsReadOnly(alphaCuts); }
+            get 
+            {
+                if (readOnlyAlphaCuts == null)
+                {
+                    readOnlyAlphaCuts = Array.AsReadOnly(alphaCuts);
+                }
+
+                return readOnlyAlphaCuts; 
+            }
         }
 
         /// <summary>
@@ -61,15 +71,16 @@ namespace FuzzyMath
         /// <summary>
         /// Creates an alpha-cut at corresponding level of membership
         /// </summary>
-        /// <param name="alpha">Value from the interval [0, 1]</param>
-        public Interval GetAlphaCut(double membership)
+        /// <param name="alpha">Degree of membership</param>
+        /// <returns></returns>
+        public Interval GetAlphaCut(double alpha)
         {
-            if (membership > 1 || membership < 0)
+            if (alpha > 1 || alpha < 0)
             {
                 throw new ArgumentException("Membership degree must be from the interval [0, 1]");
             }
 
-            var pos = membership * (alphaCuts.Length - 1);
+            var pos = alpha * (alphaCuts.Length - 1);
             var upper = (int)Math.Ceiling(pos);
             var lower = (int)Math.Floor(pos);
 
@@ -85,17 +96,17 @@ namespace FuzzyMath
         }
 
         /// <summary>
-        /// Gets membership degree of a given value
+        /// Calculates membership degree of 'x' to the fuzzy number
         /// </summary>
-        /// <param name="value"></param>
-        /// <returns>Value from the interval [0, 1]</returns>
+        /// <param name="value">x</param>
+        /// <returns>Membership degree from 0 to 1</returns>
         public double GetMembership(double value)
         {
             if (Kernel.Contains(value))
             {
                 return 1;
             }
-            
+
             if (Support.Contains(value)) 
             {
                 for (var i = 1; i < alphaCuts.Length; i++)
@@ -118,7 +129,7 @@ namespace FuzzyMath
         }
 
         /// <summary>
-        /// Concatenates alpha-cuts of the Fuzzy Number into a string
+        /// Concatenates alpha-cuts into a string
         /// </summary>
         public override string ToString()
         {

@@ -39,6 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FuzzyMathException.cs" />
     <Compile Include="Functions\atan2.cs" />
     <Compile Include="Functions\cos.cs" />
     <Compile Include="Functions\exp.cs" />

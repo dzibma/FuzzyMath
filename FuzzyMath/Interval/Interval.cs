@@ -3,30 +3,22 @@ using System.Globalization;
 
 namespace FuzzyMath
 {
-    /// <summary>
-    /// Closed interval
-    /// </summary>
     public partial struct Interval
     {
 
-        /// <summary>
-        /// Tolerance in equality comparison (of doubles) 
-        /// </summary>
-        internal static double Epsilon = 1E-12;
-
-        private double a, b;
+        private double a, b, epsilon;
 
         /// <summary>
         /// Creates a closed interval [a, b]
         /// </summary>
         /// <param name="a">Lower bound</param>
         /// <param name="b">Upper bound</param>
-        public Interval(double a, double b)
+        /// <param name="epsilon">Equality comparison tolerance</param>
+        public Interval(double a, double b, double epsilon = 0)
         {
-
             if (a > b)
             {
-                if (a - b > Epsilon)
+                if (a - b > epsilon)
                 {
                     throw new ArgumentException("Lower bound must be less than or equal to the upper");
                 }
@@ -34,26 +26,17 @@ namespace FuzzyMath
                 b = a;
             }
 
-            if (double.IsInfinity(a) || double.IsInfinity(b))
-            {
-                throw new ArgumentException("Interval must be finite.");
-            }
-
+            this.epsilon = epsilon;
             this.a = a;
             this.b = b;
         }
 
         /// <summary>
-        /// Creates a degenerate interval
+        /// Tolerance in equality comparison (of two doubles) 
         /// </summary>
-        public Interval(double a)
+        public double Epsilon
         {
-            if (double.IsInfinity(a))
-            {
-                throw new ArgumentException("Interval must be finite.");
-            }
-
-            this.a = b = a;
+            get { return epsilon; }
         }
 
         /// <summary>
@@ -93,7 +76,7 @@ namespace FuzzyMath
         /// </summary>
         public bool Contains(double value)
         {
-            return (a < value || a - value < Epsilon) && (value < b || value - b < Epsilon);
+            return (a < value || a - value <= epsilon) && (value < b || value - b <= epsilon);
         }
 
         /// <summary>
@@ -109,12 +92,12 @@ namespace FuzzyMath
         /// </summary>
         public bool Intersects(Interval other)
         {
-            if ((a > other.A || other.A - a < Epsilon) && (a < other.B || a - other.B < Epsilon))
+            if ((a > other.A || other.A - a <= epsilon) && (a < other.B || a - other.B <= epsilon))
             {
                 return true;
             }
 
-            if ((a < other.A || a - other.A < Epsilon) && (b > other.A || other.A - b < Epsilon))
+            if ((a < other.A || a - other.A <= epsilon) && (b > other.A || other.A - b <= epsilon))
             {
                 return true;
             }
@@ -123,43 +106,38 @@ namespace FuzzyMath
         }
 
         /// <summary>
-        /// Gets a string representation of the interval
+        /// How much is greater than other interval?
+        /// </summary>
+        /// <returns>Presumption level from 0 to 1</returns>
+        public double GreaterThan(Interval other)
+        {
+            if (b < other.A)
+            {
+                return 0;
+            }
+
+            if (a > other.B)
+            {
+                return 1;
+            }
+
+            var with = Width + other.Width;
+            if (with <= epsilon)
+            {
+                return .5;
+            }
+
+            return (b - other.A) / with;
+        }
+
+        /// <summary>
+        /// Builds a string representation of the interval
         /// </summary>
         /// <returns>[a, b]</returns>
         public override string ToString()
         {
             return String.Format("[{0}, {1}]", a.ToString(CultureInfo.InvariantCulture), b.ToString(CultureInfo.InvariantCulture));
-        }
-
-        public double GreaterThan(Interval other)
-        {
-            return GreaterThan(this, other);
-        }
-
-        /// <summary>
-        /// How much is interval 'x' greater than 'y'?
-        /// </summary>
-        /// <returns>Presumption level from the interval [0, 1]</returns>
-        public static double GreaterThan(Interval x, Interval y)
-        {
-            if (x.B < y.A)
-            {
-                return 0;
-            }
-
-            if (x.A > y.B)
-            {
-                return 1;
-            }
-
-            var width = x.Width + y.Width;
-            if (width < Epsilon)
-            {
-                return .5;
-            }
-
-            return (x.B - y.A) / width;
-        }
+        } 
 
     }
 }
