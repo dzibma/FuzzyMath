@@ -37,51 +37,26 @@ namespace FuzzyMath
 
         public static Interval operator *(Interval left, Interval right)
         {
-            double tmp, a, b;
+            var x1 = left.A * right.A;
+            var x2 = left.A * right.B;
+            var x3 = left.B * right.B;
+            var x4 = left.B * right.A;
 
-            a = b = left.A * right.A;
-
-            tmp = left.B * right.B;
-            if (tmp < a)
-            {
-                a = tmp;
-            }
-            else
-            {
-                b = tmp;
-            }
-
-            tmp = left.A * right.B;
-            if (tmp < a)
-            {
-                a = tmp;
-            }
-            else if (tmp > b)
-            {
-                b = tmp;
-            }
-
-            tmp = left.B * right.A;
-            if (tmp < a)
-            {
-                a = tmp;
-            }
-            else if (tmp > b)
-            {
-                b = tmp;
-            }
-
-            return new Interval(a, b, Math.Max(left.Epsilon, right.Epsilon));
+            return new Interval(
+                    Math.Min(Math.Min(x1, x2), Math.Min(x3, x4)),
+                    Math.Max(Math.Max(x1, x2), Math.Max(x3, x4)),
+                    Math.Max(left.Epsilon, right.Epsilon)
+                );
         }
 
         public static Interval operator *(Interval left, double right)
         {
-            return left * new Interval(right, right, left.Epsilon);
+            return left * new Interval(right, right);
         }
 
         public static Interval operator *(double left, Interval right)
         {
-            return new Interval(left, left, right.Epsilon) * right;
+            return new Interval(left, left) * right;
         }
 
         public static Interval operator /(Interval left, Interval right)
@@ -91,17 +66,17 @@ namespace FuzzyMath
                 throw new InvalidOperationException("Can not divide by an interval containing zero");
             }
 
-            return left * new Interval(1 / right.B, 1 / right.A, Math.Max(left.Epsilon, right.Epsilon)); // 1/[a, b] = [1/b, 1/a]
+            return left * new Interval(1 / right.B, 1 / right.A, Math.Max(left.Epsilon, right.Epsilon));
         }
 
         public static Interval operator /(Interval left, double right)
         {
-            return left / new Interval(right, right, left.Epsilon);
+            return left / new Interval(right, right);
         }
 
         public static Interval operator /(double left, Interval right)
         {
-            return new Interval(left, left, right.Epsilon) / right;
+            return new Interval(left, left) / right;
         }
 
         public static double operator >(Interval left, Interval right)
@@ -116,7 +91,7 @@ namespace FuzzyMath
 
         public static double operator >(double left, Interval right)
         {
-            return new Interval(left, left) > right;
+            return new Interval(left, left, right.Epsilon) > right;
         }
 
         public static double operator <(Interval left, Interval right)

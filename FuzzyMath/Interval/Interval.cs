@@ -3,32 +3,37 @@ using System.Globalization;
 
 namespace FuzzyMath
 {
+    /// <summary>
+    /// Closed interval to represent an alpha-cut
+    /// </summary>
     public partial struct Interval
     {
 
         private double a, b, epsilon;
 
         /// <summary>
-        /// Creates a closed interval [a, b]
+        /// Create a closed interval [a, b]
         /// </summary>
         /// <param name="a">Lower bound</param>
         /// <param name="b">Upper bound</param>
         /// <param name="epsilon">Equality comparison tolerance</param>
         public Interval(double a, double b, double epsilon = 0)
         {
-            if (a > b)
-            {
-                if (a - b > epsilon)
-                {
-                    throw new ArgumentException("Lower bound must be less than or equal to the upper");
-                }
-
-                b = a;
-            }
-
             this.epsilon = epsilon;
-            this.a = a;
-            this.b = b;
+
+            if (Math.Abs(a - b) <= epsilon)
+            {
+                this.a = this.b = a;
+            }
+            else if (a < b)
+            {
+                this.a = a;
+                this.b = b;
+            }
+            else
+            {
+                throw new ArgumentException("Lower bound must be less than or equal to the upper");
+            }
         }
 
         /// <summary>
@@ -68,15 +73,15 @@ namespace FuzzyMath
         /// </summary>
         public double Midpoint
         {
-            get { return a + Width / 2; }
+            get { return (a + b) / 2; }
         }
 
         /// <summary>
         /// Containts a value?
         /// </summary>
-        public bool Contains(double value)
+        public bool Contains(double x)
         {
-            return (a < value || a - value <= epsilon) && (value < b || value - b <= epsilon);
+            return x >= a - epsilon && x <= b + epsilon;
         }
 
         /// <summary>
@@ -84,7 +89,7 @@ namespace FuzzyMath
         /// </summary>
         public bool Contains(Interval other)
         {
-            return Contains(other.A) && Contains(other.B);
+            return other.A >= a - epsilon && other.B <= b + epsilon;
         }
 
         /// <summary>
@@ -92,17 +97,12 @@ namespace FuzzyMath
         /// </summary>
         public bool Intersects(Interval other)
         {
-            if ((a > other.A || other.A - a <= epsilon) && (a < other.B || a - other.B <= epsilon))
+            if (other.Epsilon > epsilon)
             {
-                return true;
+                return other.Intersects(this);
             }
 
-            if ((a < other.A || a - other.A <= epsilon) && (b > other.A || other.A - b <= epsilon))
-            {
-                return true;
-            }
-
-            return false;
+            return Contains(other.A) || Contains(other.B) || other.Contains(this);
         }
 
         /// <summary>
@@ -111,18 +111,20 @@ namespace FuzzyMath
         /// <returns>Presumption level from 0 to 1</returns>
         public double GreaterThan(Interval other)
         {
-            if (b < other.A)
+            var e = Math.Max(epsilon, other.Epsilon);
+
+            if (b < other.A - e)
             {
                 return 0;
             }
 
-            if (a > other.B)
+            if (a > other.B + e)
             {
                 return 1;
             }
 
             var with = Width + other.Width;
-            if (with <= epsilon)
+            if (with <= e)
             {
                 return .5;
             }

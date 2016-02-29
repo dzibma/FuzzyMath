@@ -14,17 +14,17 @@ namespace FuzzyMath.Tests
 
             Assert.AreEqual(
                     new Interval(2, 2),
-                    fn.CreateTrapezoidal(1, 2, 3).GetAlphaCut(1)
+                    fn.CreateTriangular(1, 2, 3).GetAlphaCut(1)
                 );
 
             Assert.AreEqual(
                     new Interval(1.5, 2.5),
-                    fn.CreateTrapezoidal(1, 2, 3).GetAlphaCut(0.5)
+                    fn.CreateTriangular(1, 2, 3).GetAlphaCut(0.5)
                 );
 
             Assert.AreEqual(
                     new Interval(1.6, 2.8),
-                    fn.CreateTrapezoidal(0, 2, 6).GetAlphaCut(0.8)
+                    fn.CreateTriangular(0, 2, 6).GetAlphaCut(0.8)
                 );
         }
 
@@ -35,27 +35,27 @@ namespace FuzzyMath.Tests
 
             Assert.AreEqual(
                     0,
-                    fn.CreateTrapezoidal(1, 2, 10).GetMembership(1)
+                    fn.CreateTriangular(1, 2, 10).GetMembership(1)
                 );
 
             Assert.AreEqual(
                     0.25,
-                    fn.CreateTrapezoidal(1, 2, 10).GetMembership(8)
+                    fn.CreateTriangular(1, 2, 10).GetMembership(8)
                 );
 
             Assert.AreEqual(
                     1,
-                    fn.CreateTrapezoidal(1, 2, 10).GetMembership(2)
+                    fn.CreateTriangular(1, 2, 10).GetMembership(2)
                 );
 
             Assert.AreEqual(
                     0.1,
-                    fn.CreateTrapezoidal(1, 2, 3).GetMembership(1.1)
+                    fn.CreateTriangular(1, 2, 3).GetMembership(1.1)
                 );
 
             Assert.AreEqual(
                     0.8,
-                    fn.CreateTrapezoidal(1, 2, 3).GetMembership(1.8)
+                    fn.CreateTriangular(1, 2, 3).GetMembership(1.8)
                 );
         }
 
@@ -65,8 +65,8 @@ namespace FuzzyMath.Tests
             var fn = new FuzzyNumberFactory();
 
             Assert.AreEqual(
-                    fn.CreateTrapezoidal(-3, -2, -1).ToString(),
-                    FuzzyNumber.Map(fn.CreateTrapezoidal(.1, .2, .3), x => x * -10).ToString()
+                    fn.CreateTriangular(-3, -2, -1).ToString(),
+                    FuzzyNumber.Map(fn.CreateTriangular(.1, .2, .3), x => x * -10).ToString()
                 );
         }
 
@@ -76,8 +76,8 @@ namespace FuzzyMath.Tests
             var fn = new FuzzyNumberFactory();
 
             Assert.AreEqual(
-                    fn.CreateTrapezoidal(1, 3, 5).ToString(),
-                    FuzzyNumber.Map(fn.CreateTrapezoidal(0, 1, 2), fn.CreateTrapezoidal(1, 2, 3), (x, y) => x + y).ToString()
+                    fn.CreateTriangular(1, 3, 5).ToString(),
+                    FuzzyNumber.Map(fn.CreateTriangular(0, 1, 2), fn.CreateTriangular(1, 2, 3), (x, y) => x + y).ToString()
                 );
         }
 

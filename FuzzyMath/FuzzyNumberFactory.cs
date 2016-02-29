@@ -9,7 +9,7 @@
         /// <summary>
         /// Number of alpha-cuts 
         /// </summary>
-        public int Pieces
+        public int NumberOfAlphaCuts
         {
             get;
             private set;
@@ -29,9 +29,9 @@
         /// </summary>
         /// <param name="pieces">Nubmer of alpha-cuts</param>
         /// <param name="epsilon">Tolerance in equality comparison</param>
-        public FuzzyNumberFactory(int pieces = 11, double epsilon = 1E-12)
+        public FuzzyNumberFactory(int numberOfAlphaCuts = 11, double epsilon = 1E-12)
         {
-            Pieces = pieces > 1 ? pieces : 2;
+            NumberOfAlphaCuts = numberOfAlphaCuts > 1 ? numberOfAlphaCuts : 2;
             Epsilon = epsilon;
         }
 
@@ -45,13 +45,13 @@
         /// <returns></returns>
         public FuzzyNumber CreateTrapezoidal(double a, double b, double c, double d)
         {
-            var intervals = new Interval[Pieces];
+            var intervals = new Interval[NumberOfAlphaCuts];
 
-            for (var i = 0; i < intervals.Length; i++)
+            for (var i = 0; i < NumberOfAlphaCuts; i++)
             {
                 intervals[i] = new Interval(
-                        a + (b - a) * i / (Pieces - 1),
-                        d - (d - c) * i / (Pieces - 1),
+                        a + (b - a) * i / (NumberOfAlphaCuts - 1),
+                        d - (d - c) * i / (NumberOfAlphaCuts - 1),
                         Epsilon
                     );
             }
@@ -66,7 +66,7 @@
         /// <param name="b">Kernel</param>
         /// <param name="c">Support upper bound</param>
         /// <returns></returns>
-        public FuzzyNumber CreateTrapezoidal(double a, double b, double c)
+        public FuzzyNumber CreateTriangular(double a, double b, double c)
         {
             return CreateTrapezoidal(a, b, b, c);
         }
@@ -74,7 +74,7 @@
         /// <summary>
         /// Creates a fuzzy number representing a crisp value
         /// </summary>
-        public FuzzyNumber CreateTrapezoidal(double a)
+        public FuzzyNumber CreateCrisp(double a)
         {
             return CreateTrapezoidal(a, a, a, a);
         }
