@@ -6,14 +6,18 @@ namespace FuzzyMath
     {
 
         /// <summary>
-        /// Calculates sine of the fuzzy number
+        /// Calculates a sine of the fuzzy angle.
         /// </summary>
-        /// <param name="X">Fuzzy angle in radians</param>
+        /// <param name="X">A fuzzy number represents the angle in radians.</param>
         public static FuzzyNumber Sin(FuzzyNumber X)
         {
             return FuzzyNumber.Map(X, x => Sin(x));
         }
 
+        /// <summary>
+        /// Calculates a sine of the interval of angles.
+        /// </summary>
+        /// <param name="x">A interval represents the angle in radians.</param>
         public static Interval Sin(Interval x)
         {
             double a, b, extreme;
@@ -53,7 +57,7 @@ namespace FuzzyMath
                     : Math.Max(Math.Sin(x.A), Math.Sin(x.B));
             }
 
-            return b > a ? new Interval(a, b) : new Interval(b, a);
+            return b > a ? new Interval(a, b, x.Epsilon) : new Interval(b, a, x.Epsilon);
         }
 
     }

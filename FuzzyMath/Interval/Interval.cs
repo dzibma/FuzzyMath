@@ -111,20 +111,20 @@ namespace FuzzyMath
         /// <returns>Presumption level from 0 to 1</returns>
         public double GreaterThan(Interval other)
         {
-            var e = Math.Max(epsilon, other.Epsilon);
+            var epsilon = Math.Max(this.epsilon, other.Epsilon);
 
-            if (b < other.A - e)
+            if (b < other.A - epsilon)
             {
                 return 0;
             }
 
-            if (a > other.B + e)
+            if (a > other.B + epsilon)
             {
                 return 1;
             }
 
             var with = Width + other.Width;
-            if (with <= e)
+            if (with <= epsilon)
             {
                 return .5;
             }

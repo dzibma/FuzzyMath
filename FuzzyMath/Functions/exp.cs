@@ -6,7 +6,7 @@ namespace FuzzyMath
     {
 
         /// <summary>
-        /// Calculates value of e raised to fuzzy number 'X'
+        /// Calculates e raised to the specified fuzzy number.
         /// </summary>
         /// <param name="X">Exponent</param>
         public static FuzzyNumber Exp(FuzzyNumber X)
@@ -14,9 +14,13 @@ namespace FuzzyMath
             return FuzzyNumber.Map(X, x => Exp(x));
         }
 
+        /// <summary>
+        /// Calculates e raised to the specified interval.
+        /// </summary>
+        /// <param name="X">Exponent</param>
         public static Interval Exp(Interval x)
         {
-            return new Interval(Math.Exp(x.A), Math.Exp(x.B));
+            return new Interval(Math.Exp(x.A), Math.Exp(x.B), x.Epsilon);
         }
 
     }

@@ -6,14 +6,18 @@ namespace FuzzyMath
     {
 
         /// <summary>
-        /// Calculates cosine of the fuzzy number
+        /// Calculates a cosine of the fuzzy angle.
         /// </summary>
-        /// <param name="X">Fuzzy angle in radians</param>
+        /// <param name="X">A fuzzy number represents the angle in radians.</param>
         public static FuzzyNumber Cos(FuzzyNumber X)
         {
             return FuzzyNumber.Map(X, x => Cos(x));
         }
 
+        /// <summary>
+        /// Calculates a cosine of the interval.
+        /// </summary>
+        /// <param name="x">A fuzzy number represents the angle in radians.</param>
         public static Interval Cos(Interval x)
         {
             double a, b, extreme;
@@ -53,7 +57,7 @@ namespace FuzzyMath
                     : Math.Max(Math.Cos(x.A), Math.Cos(x.B));
             }
 
-            return b > a ? new Interval(a, b) : new Interval(b, a);
+            return b > a ? new Interval(a, b, x.Epsilon) : new Interval(b, a, x.Epsilon);
         }
 
     }
