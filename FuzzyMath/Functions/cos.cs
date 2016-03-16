@@ -40,7 +40,9 @@ namespace FuzzyMath
                     a = Math.Cos(x.A);
                     b = Math.Cos(x.B);
 
-                    return b > a ? new Interval(a, b) : new Interval(b, a);
+                    return b > a
+                        ? new Interval(a, b, x.Epsilon)
+                        : new Interval(b, a, x.Epsilon);
                 }
             }
 
@@ -50,14 +52,18 @@ namespace FuzzyMath
             {
                 b = Math.Cos(extreme);
             }
+            else if (a > 0)
+            {
+                b = Math.Min(Math.Cos(x.A), Math.Cos(x.B));
+            }
             else
             {
-                b = a > 0
-                    ? Math.Min(Math.Cos(x.A), Math.Cos(x.B))
-                    : Math.Max(Math.Cos(x.A), Math.Cos(x.B));
+                b = Math.Max(Math.Cos(x.A), Math.Cos(x.B));
             }
 
-            return b > a ? new Interval(a, b, x.Epsilon) : new Interval(b, a, x.Epsilon);
+            return b > a
+                ? new Interval(a, b, x.Epsilon)
+                : new Interval(b, a, x.Epsilon);
         }
 
     }
