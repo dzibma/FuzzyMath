@@ -8,12 +8,19 @@ The easiest way to create a fuzzy number is to use a `FuzzyNumberFactory` servic
 ```c#
 var factory = new FuzzyNumberFactory(6);
 
-FuzzyNumber A = factory.createTriangular(1, 2, 3);
-FuzzyNumber B = factory.createTrapezoidal(2, 4, 5, 6);
-FuzzyNumber C = factory.createCrisp(-0.5);
+FuzzyNumber A = factory.createTriangular(2, 3, 5, 7);
+FuzzyNumber B = factory.createTrapezoidal(5, 8, 9);
+FuzzyNumber C = factory.createCrisp(7);
 ```
 
-TODO
+![Fuzzy numbers A, B, C](https://cloud.githubusercontent.com/assets/7131153/14114119/17a45572-f5d6-11e5-916d-452b434f4650.PNG)
+
+### Basic arithmetic
+```c#
+FuzzyNumber D = -2 * C + A / B;
+```
+
+![Fuzzy number D](https://cloud.githubusercontent.com/assets/7131153/14114121/18576d74-f5d6-11e5-87f0-4a075f1b1d5d.PNG)
 
 ## License
 The MIT License (MIT)
