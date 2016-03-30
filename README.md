@@ -1,6 +1,12 @@
 # FuzzyMath
 A lightweight library for fuzzy arithmetic.
 
+### Installation
+[Install via NuGet](https://www.nuget.org/packages/FuzzyMath/)
+
+### License
+The MIT License (MIT)
+
 ## Usage
 
 ### Fuzzy Number
@@ -19,6 +25,3 @@ FuzzyNumber D = -2 * C + A / B;
 ```
 
 ![Fuzzy numbers A, B, C](https://cloud.githubusercontent.com/assets/7131153/14114997/8fe492a6-f5d9-11e5-8bdc-bf34be7a653a.PNG)
-
-## License
-The MIT License (MIT)
