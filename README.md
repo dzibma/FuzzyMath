@@ -21,7 +21,7 @@ FuzzyNumber C = factory.createCrisp(7);
 ### Basic arithmetic
 Operators `+-*/` are overloaded, so you can use the fuzzy numbers created above as if they were `double`s.
 ```c#
-FuzzyNumber D = -2 * C + A / B;
+FuzzyNumber D = 2 * C - (2.5 + A / B);
 ```
 
-![Fuzzy numbers A, B, C](https://cloud.githubusercontent.com/assets/7131153/14114997/8fe492a6-f5d9-11e5-8bdc-bf34be7a653a.PNG)
+![Fuzzy numbers A, B, C](https://cloud.githubusercontent.com/assets/7131153/14786404/03e53cc0-0aff-11e6-818e-9dee1ad5a048.PNG)
