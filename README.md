@@ -7,7 +7,7 @@ A lightweight library for fuzzy arithmetic based on operations over the α-cuts 
 ### License
 The MIT License (MIT)
 
-## Usage
+## Basic usage
 
 ### Fuzzy Number
 The easiest way to create a (piecewise linear) fuzzy number is to use a `FuzzyNumberFactory` service. The constructor takes two optional arguments. The first one is a number of α-cuts, which the fuzzy numbers are made of. The second one is an epsilon to deal with floating points rounding errors.
@@ -18,8 +18,19 @@ FuzzyNumber A = factory.createTriangular(2, 3, 5, 7);
 FuzzyNumber B = factory.createTrapezoidal(5, 8, 9);
 FuzzyNumber C = factory.createCrisp(7);
 ```
+
+Each α-cut (`Interval`) of the fuzzy number is accessible from `FuzzyNumber.AlphaCuts` property (`IList<Interval>`) by its index
+```c#
+Interval a = A.AlphaCuts[0]; // kernel
+```
+
+or you can get an α-cut by its membership value [0-1]
+```c#
+Interval b = B.GetAlhpaCut(.75);
+```
+
 ### Basic arithmetic
-Operators `+-*/` are overloaded, so you can use the fuzzy numbers created above as if they were `double`s.
+Operators `+-*/` are overloaded, so you can use the fuzzy numbers created above as if they were `double`s
 ```c#
 FuzzyNumber D = 2 * C - (2.5 + A / B);
 ```
