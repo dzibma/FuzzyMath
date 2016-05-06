@@ -29,6 +29,13 @@ or you can get an α-cut by its membership value [0-1]
 Interval b = B.GetAlhpaCut(.75);
 ```
 
+To get a degree of membership μ(x) of value x (`double`) use
+```c#
+double m1 = B.GetMembership(4); // returns 0
+double m2 = B.GetMembership(7.1) // returns .7
+double m3 = B.GetMembership(8) // returns 1
+```
+
 ### Basic arithmetic
 Operators `+-*/` are overloaded, so you can use the fuzzy numbers created above as if they were `double`s
 ```c#
