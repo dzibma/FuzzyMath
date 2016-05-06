@@ -29,7 +29,7 @@
         /// </summary>
         /// <param name="pieces">Nubmer of alpha-cuts</param>
         /// <param name="epsilon">Tolerance in equality comparison</param>
-        public FuzzyNumberFactory(int numberOfAlphaCuts = 11, double epsilon = 1E-12)
+        public FuzzyNumberFactory(int numberOfAlphaCuts = 11, double epsilon = 1E-6)
         {
             NumberOfAlphaCuts = numberOfAlphaCuts > 1 ? numberOfAlphaCuts : 2;
             Epsilon = epsilon;

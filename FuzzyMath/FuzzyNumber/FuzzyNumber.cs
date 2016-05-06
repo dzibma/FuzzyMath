@@ -144,18 +144,18 @@ namespace FuzzyMath
         /// <returns>A Presumption (0 - 1) that the fuzzy number is greater</returns>
         public double GreaterThan(FuzzyNumber other)
         {
-            if (other.AlphaCuts.Count != AlphaCuts.Count)
-            {
-                throw new NotImplementedException();
+            if (other.AlphaCuts.Count == AlphaCuts.Count)
+            {               
+                var sum = 0d;
+                for (var i = 0; i < AlphaCuts.Count; i++)
+                {
+                    sum += AlphaCuts[i].GreaterThan(other.AlphaCuts[i]);
+                }
+
+                return sum / AlphaCuts.Count;
             }
 
-            var sum = 0d;
-            for (var i = 0; i < AlphaCuts.Count; i++)
-            {
-                sum += AlphaCuts[i].GreaterThan(other.AlphaCuts[i]);
-            }
-
-            return sum / AlphaCuts.Count;
+            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -172,12 +172,13 @@ namespace FuzzyMath
         /// </summary>
         public static FuzzyNumber Map(FuzzyNumber X, FuzzyNumber Y, Func<Interval, Interval, Interval> operation)
         {
-            if (X.AlphaCuts.Count != Y.AlphaCuts.Count)
+            if (X.AlphaCuts.Count == Y.AlphaCuts.Count)
             {
-                throw new NotImplementedException();
+                return new FuzzyNumber(X.AlphaCuts.Zip(Y.AlphaCuts, operation));
+                
             }
 
-            return new FuzzyNumber(X.AlphaCuts.Zip(Y.AlphaCuts, operation));
+            throw new NotImplementedException();
         }
 
     }
